@@ -8,3 +8,5 @@ docker compose up sobre Postgres 16 e Spring Boot 3 com Java 21. Flyway aplicou 
 
 ### 2026-05-13 - Primeiro vertical slice: Categoria
 Service, controller, DTO, GlobalExceptionHandler e templates Thymeleaf implementados. CRUD completo da entidade Categoria funcionando: criar, listar, editar e excluir, com validação e mensagens de erro/sucesso. Padrões Clean Architecture (camadas separadas) e Post/Redirect/Get aplicados.
+### 2026-05-13 - Bloco 2D: autenticação implementada
+Entidades Perfil e Usuario, UserDetailsService, SecurityConfig com BCrypt fator 10, tela de login Thymeleaf, navbar com usuário logado e logout. CSRF desabilitado provisoriamente — pendência para Onda 3.
