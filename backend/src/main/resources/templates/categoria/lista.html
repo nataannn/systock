@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="pt-br">
+<head th:replace="~{fragments/layout :: head('Categorias')}"></head>
+<body>
+    <div th:replace="~{fragments/layout :: navbar}"></div>
+
+    <h1>Categorias</h1>
+
+    <p class="erro" th:if="${erro}" th:text="${erro}"></p>
+    <p class="sucesso" th:if="${sucesso}" th:text="${sucesso}"></p>
+
+    <form th:action="@{/categorias}" th:object="${form}" method="post">
+        <input type="text" th:field="*{nome}" placeholder="Nome da nova categoria" autofocus>
+        <button type="submit" class="primary">Adicionar</button>
+        <p class="validacao" th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}"></p>
+    </form>
+
+    <table th:if="${!#lists.isEmpty(categorias)}">
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th style="width: 220px;">Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="cat : ${categorias}">
+                <td th:text="${cat.nome}"></td>
+                <td>
+                    <a th:href="@{|/categorias/${cat.id}/editar|}">Editar</a>
+                    &nbsp;|&nbsp;
+                    <form th:action="@{|/categorias/${cat.id}/excluir|}" method="post" style="display:inline;"
+                          onsubmit="return confirm('Confirma exclusão da categoria?');">
+                        <button type="submit" class="link">Excluir</button>
+                    </form>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <p th:if="${#lists.isEmpty(categorias)}">Nenhuma categoria cadastrada ainda.</p>
+</body>
+</html>
