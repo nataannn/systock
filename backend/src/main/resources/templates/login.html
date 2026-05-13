@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      lang="pt-br">
+<head th:replace="~{fragments/layout :: head('Entrar')}"></head>
+<body>
+    <h1>Systock</h1>
+    <p>Acesse o sistema com suas credenciais.</p>
+
+    <p class="erro" th:if="${mensagemErro}" th:text="${mensagemErro}"></p>
+    <p class="sucesso" th:if="${mensagemSucesso}" th:text="${mensagemSucesso}"></p>
+
+    <form th:action="@{/login}" method="post" style="max-width: 320px;">
+        <label for="email">E-mail</label><br>
+        <input type="email" id="email" name="email" autofocus required style="width: 100%;"><br><br>
+
+        <label for="senha">Senha</label><br>
+        <input type="password" id="senha" name="senha" required style="width: 100%;"><br><br>
+
+        <button type="submit" class="primary">Entrar</button>
+    </form>
+</body>
+</html>

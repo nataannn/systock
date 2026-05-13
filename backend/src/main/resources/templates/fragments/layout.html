@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="pt-br">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      lang="pt-br">
 <head th:fragment="head(titulo)">
     <meta charset="UTF-8">
     <title th:text="|Systock — ${titulo}|">Systock</title>
@@ -24,11 +26,19 @@
     </style>
 </head>
 <body th:fragment="navbar">
-    <nav>
-        <a th:href="@{/categorias}">Categorias</a>
-        <a href="#">Produtos</a>
-        <a href="#">Clientes</a>
-        <a href="#">Vendas</a>
+    <nav style="display:flex; justify-content:space-between; align-items:center;">
+        <span>
+            <a th:href="@{/categorias}">Categorias</a>
+            <a href="#">Produtos</a>
+            <a href="#">Clientes</a>
+            <a href="#">Vendas</a>
+        </span>
+        <span sec:authorize="isAuthenticated()">
+            <span th:text="${#authentication.name}" style="margin-right: 1rem; color: #666;"></span>
+            <form th:action="@{/logout}" method="post" style="display:inline; margin:0;">
+                <button type="submit" class="link">Sair</button>
+            </form>
+        </span>
     </nav>
 </body>
 </html>

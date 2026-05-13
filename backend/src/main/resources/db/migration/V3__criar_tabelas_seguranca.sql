@@ -33,7 +33,7 @@ INSERT INTO usuario (id, email, senha_hash, nome, perfil_id)
 SELECT
     gen_random_uuid(),
     'admin@systock.local',
-    '2y$10$/AdgguH/xmUaqRyroI04v.Z2PkUzYmPqsz3s3zf6bPgyzekeB7X0C',
+    '$2y$10$/AdgguH/xmUaqRyroI04v.Z2PkUzYmPqsz3s3zf6bPgyzekeB7X0C',
     'Administrador',
     p.id
 FROM perfil p
