@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      lang="pt-br">
+<head th:replace="~{fragments/layout :: head('Editar fornecedor')}"></head>
+<body>
+    <div th:replace="~{fragments/layout :: navbar}"></div>
+
+    <h1>Editar fornecedor</h1>
+
+    <form th:action="@{|/fornecedores/${fornecedor.id}|}" th:object="${form}" method="post">
+        <div>
+            <label>CNPJ</label><br>
+            <input type="text" th:field="*{cnpj}" readonly style="background: #f4f4f4; color: #666;">
+            <small style="display:block; color:#666;">CNPJ não pode ser alterado após o cadastro.</small>
+        </div>
+        <br>
+        <div>
+            <label>Razão social</label><br>
+            <input type="text" th:field="*{razaoSocial}" autofocus>
+            <p class="validacao" th:if="${#fields.hasErrors('razaoSocial')}" th:errors="*{razaoSocial}"></p>
+        </div>
+        <br>
+        <div>
+            <label>Nome fantasia</label><br>
+            <input type="text" th:field="*{nomeFantasia}">
+            <p class="validacao" th:if="${#fields.hasErrors('nomeFantasia')}" th:errors="*{nomeFantasia}"></p>
+        </div>
+        <br>
+        <div>
+            <label>E-mail</label><br>
+            <input type="text" th:field="*{email}">
+            <p class="validacao" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></p>
+        </div>
+        <br>
+        <div>
+            <label>Telefone</label><br>
+            <input type="text" th:field="*{telefone}">
+            <p class="validacao" th:if="${#fields.hasErrors('telefone')}" th:errors="*{telefone}"></p>
+        </div>
+        <br>
+        <button type="submit" class="primary">Salvar</button>
+        <a th:href="@{/fornecedores}">Cancelar</a>
+    </form>
+</body>
+</html>

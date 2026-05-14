@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      lang="pt-br">
+<head th:replace="~{fragments/layout :: head('Fornecedores')}"></head>
+<body>
+    <div th:replace="~{fragments/layout :: navbar}"></div>
+
+    <h1>Fornecedores</h1>
+
+    <p class="erro" th:if="${erro}" th:text="${erro}"></p>
+    <p class="sucesso" th:if="${sucesso}" th:text="${sucesso}"></p>
+
+    <form th:action="@{/fornecedores}" th:object="${form}" method="post" style="margin-bottom: 1.5rem;">
+        <div style="display: grid; grid-template-columns: repeat(2, 280px); gap: 0.5rem 1rem;">
+            <div>
+                <label>CNPJ</label><br>
+                <input type="text" th:field="*{cnpj}" placeholder="00000000000000" autofocus>
+                <p class="validacao" th:if="${#fields.hasErrors('cnpj')}" th:errors="*{cnpj}"></p>
+            </div>
+            <div>
+                <label>Razão social</label><br>
+                <input type="text" th:field="*{razaoSocial}">
+                <p class="validacao" th:if="${#fields.hasErrors('razaoSocial')}" th:errors="*{razaoSocial}"></p>
+            </div>
+            <div>
+                <label>Nome fantasia</label><br>
+                <input type="text" th:field="*{nomeFantasia}">
+                <p class="validacao" th:if="${#fields.hasErrors('nomeFantasia')}" th:errors="*{nomeFantasia}"></p>
+            </div>
+            <div>
+                <label>E-mail</label><br>
+                <input type="text" th:field="*{email}">
+                <p class="validacao" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></p>
+            </div>
+            <div>
+                <label>Telefone</label><br>
+                <input type="text" th:field="*{telefone}">
+                <p class="validacao" th:if="${#fields.hasErrors('telefone')}" th:errors="*{telefone}"></p>
+            </div>
+        </div>
+        <br>
+        <button type="submit" class="primary">Cadastrar fornecedor</button>
+    </form>
+
+    <p>
+        <a th:if="${!incluirInativos}" th:href="@{/fornecedores(incluirInativos=true)}">
+            Mostrar também inativos
+        </a>
+        <a th:if="${incluirInativos}" th:href="@{/fornecedores}">
+            Mostrar somente ativos
+        </a>
+    </p>
+
+    <table th:if="${!#lists.isEmpty(fornecedores)}">
+        <thead>
+            <tr>
+                <th>CNPJ</th>
+                <th>Razão social</th>
+                <th>Nome fantasia</th>
+                <th>Contato</th>
+                <th>Status</th>
+                <th style="width: 220px;">Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="f : ${fornecedores}">
+                <td th:text="${f.cnpj}"></td>
+                <td th:text="${f.razaoSocial}"></td>
+                <td th:text="${f.nomeFantasia} ?: '—'"></td>
+                <td>
+                    <span th:text="${f.email} ?: ''"></span>
+                    <span th:if="${f.email != null and f.telefone != null}"> · </span>
+                    <span th:text="${f.telefone} ?: ''"></span>
+                </td>
+                <td>
+                    <span th:if="${f.ativo}" style="color: #28a745;">Ativo</span>
+                    <span th:if="${!f.ativo}" style="color: #999;">Inativo</span>
+                </td>
+                <td>
+                    <a th:href="@{|/fornecedores/${f.id}/editar|}">Editar</a>
+                    &nbsp;|&nbsp;
+                    <form th:if="${f.ativo}" th:action="@{|/fornecedores/${f.id}/desativar|}" method="post"
+                          style="display:inline;"
+                          onsubmit="return confirm('Desativar este fornecedor?');">
+                        <button type="submit" class="link">Desativar</button>
+                    </form>
+                    <form th:if="${!f.ativo}" th:action="@{|/fornecedores/${f.id}/ativar|}" method="post"
+                          style="display:inline;">
+                        <button type="submit" class="link">Reativar</button>
+                    </form>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <p th:if="${#lists.isEmpty(fornecedores)}">Nenhum fornecedor cadastrado.</p>
+</body>
+</html>
