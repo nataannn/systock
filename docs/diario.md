@@ -19,3 +19,6 @@ Cinco perguntas tipo banca. Acertei readOnly (Pergunta 2) e POST vs GET (Pergunt
 
 ### 2026-05-15 - Produto modelado
 Entidade com @ManyToOne LAZY para Categoria e Fornecedor, BigDecimal para preços, invariantes de domínio em darBaixaEstoque/darEntradaEstoque, repositório com JOIN FETCH para evitar N+1, V5 com CHECK constraints e índice parcial.
+
+### 2026-05-15 - Vertical slice de Produto
+Service, DTO, controller e três templates (lista, cadastro, edição). Dropdowns populados via carregarOpcoes(). Decisão: tela de cadastro separada da listagem por densidade de campos. Estoque atual readonly na edição — alterações só via entrada/baixa para rastreabilidade. Endpoint /entrada-estoque expõe método de domínio darEntradaEstoque(). Saída de estoque virá com Venda (operação transacional). Erro de validação retorna template diretamente em vez de PRG porque dropdowns precisam ser repopulados.
