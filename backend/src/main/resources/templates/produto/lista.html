@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      lang="pt-br">
+<head th:replace="~{fragments/layout :: head('Produtos')}"></head>
+<body>
+    <div th:replace="~{fragments/layout :: navbar}"></div>
+
+    <h1>Produtos</h1>
+
+    <p class="erro" th:if="${erro}" th:text="${erro}"></p>
+    <p class="sucesso" th:if="${sucesso}" th:text="${sucesso}"></p>
+
+    <p>
+        <a th:href="@{/produtos/novo}" class="primary"
+           style="display:inline-block; background:#0366d6; color:white; padding:0.5rem 1rem; border-radius:4px; text-decoration:none;">
+            + Novo produto
+        </a>
+        &nbsp;&nbsp;
+        <a th:if="${!incluirInativos}" th:href="@{/produtos(incluirInativos=true)}">
+            Mostrar também inativos
+        </a>
+        <a th:if="${incluirInativos}" th:href="@{/produtos}">
+            Mostrar somente ativos
+        </a>
+    </p>
+
+    <table th:if="${!#lists.isEmpty(produtos)}">
+        <thead>
+            <tr>
+                <th>Código</th>
+                <th>Nome</th>
+                <th>Categoria</th>
+                <th>Fornecedor</th>
+                <th>Preço venda</th>
+                <th>Estoque</th>
+                <th>Status</th>
+                <th style="width: 260px;">Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="p : ${produtos}">
+                <td th:text="${p.codigo}"></td>
+                <td th:text="${p.nome}"></td>
+                <td th:text="${p.categoria.nome}"></td>
+                <td th:text="${p.fornecedor.razaoSocial}"></td>
+                <td th:text="${#numbers.formatDecimal(p.precoVenda, 1, 'POINT', 2, 'COMMA')}"></td>
+                <td>
+                    <span th:text="${p.estoqueAtual}"></span>
+                    <span th:if="${p.estoqueCritico}" style="color: #d73a49; font-weight:bold;"> ⚠</span>
+                </td>
+                <td>
+                    <span th:if="${p.ativo}" style="color: #28a745;">Ativo</span>
+                    <span th:if="${!p.ativo}" style="color: #999;">Inativo</span>
+                </td>
+                <td>
+                    <a th:href="@{|/produtos/${p.id}/editar|}">Editar</a>
+                    &nbsp;|&nbsp;
+                    <form th:action="@{|/produtos/${p.id}/entrada-estoque|}" method="post"
+                          style="display:inline;">
+                        <input type="number" name="quantidade" min="1" value="1"
+                               style="width: 60px; padding: 2px;">
+                        <button type="submit" class="link">Entrada</button>
+                    </form>
+                    &nbsp;|&nbsp;
+                    <form th:if="${p.ativo}" th:action="@{|/produtos/${p.id}/desativar|}" method="post"
+                          style="display:inline;"
+                          onsubmit="return confirm('Desativar este produto?');">
+                        <button type="submit" class="link">Desativar</button>
+                    </form>
+                    <form th:if="${!p.ativo}" th:action="@{|/produtos/${p.id}/ativar|}" method="post"
+                          style="display:inline;">
+                        <button type="submit" class="link">Reativar</button>
+                    </form>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <p th:if="${#lists.isEmpty(produtos)}">Nenhum produto cadastrado.</p>
+</body>
+</html>
