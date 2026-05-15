@@ -22,3 +22,6 @@ Entidade com @ManyToOne LAZY para Categoria e Fornecedor, BigDecimal para preço
 
 ### 2026-05-15 - Vertical slice de Produto
 Service, DTO, controller e três templates (lista, cadastro, edição). Dropdowns populados via carregarOpcoes(). Decisão: tela de cadastro separada da listagem por densidade de campos. Estoque atual readonly na edição — alterações só via entrada/baixa para rastreabilidade. Endpoint /entrada-estoque expõe método de domínio darEntradaEstoque(). Saída de estoque virá com Venda (operação transacional). Erro de validação retorna template diretamente em vez de PRG porque dropdowns precisam ser repopulados.
+
+### 2026-05-15 - Vertical slice de Produto + quiz
+Service, DTO, controller, três templates de Produto. Bug do binding (Neither BindingResult... 'form') resolvido com @ModelAttribute("form") nos métodos POST. Mensagens de validação customizadas em português. Quiz: acertei UUID no DTO e estratégia anti-PRG. Travei em Single Responsibility (defesa dos 3 services injetados) e mecanismo de binding do Spring (sticky form). Conceitos a estudar antes da próxima sessão: SOLID aplicado, ciclo de vida de @ModelAttribute, binding bidirecional do Spring.
