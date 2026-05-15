@@ -16,3 +16,6 @@ Service, DTO, controller, templates de listagem e edição. CRUD completo com ex
 
 ### 2026-05-14 - Quiz Fornecedor
 Cinco perguntas tipo banca. Acertei readOnly (Pergunta 2) e POST vs GET (Pergunta 5). Errei dirty checking (Pergunta 1) e travei em defesa em profundidade (Pergunta 3) e PRG (Pergunta 4). Conceitos a internalizar antes de Produto.
+
+### 2026-05-15 - Produto modelado
+Entidade com @ManyToOne LAZY para Categoria e Fornecedor, BigDecimal para preços, invariantes de domínio em darBaixaEstoque/darEntradaEstoque, repositório com JOIN FETCH para evitar N+1, V5 com CHECK constraints e índice parcial.
