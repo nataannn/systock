@@ -1,7 +1,7 @@
 package com.systock.application.fornecedor;
 
-import com.systock.domain.fornecedor.Fornecedor;
 import com.systock.domain.shared.RegraDeNegocioException;
+import com.systock.domain.fornecedor.Fornecedor;
 import com.systock.domain.shared.CnpjValidator;
 import com.systock.infrastructure.persistence.FornecedorRepository;
 import org.springframework.stereotype.Service;
@@ -46,13 +46,15 @@ public class FornecedorService {
         if (cnpj == null || cnpj.length() != 14) {
             throw new RegraDeNegocioException("CNPJ deve conter exatamente 14 dígitos");
         }
-        if (repository.existsByCnpj(cnpj)) {
-            throw new RegraDeNegocioException(
-                    "Já existe um fornecedor com o CNPJ " + cnpj);
-        }
+        
         if (!CnpjValidator.isValido(cnpj)) {
             throw new RegraDeNegocioException(
                     "CNPJ inválido: dígitos verificadores não conferem");
+        }
+
+        if (repository.existsByCnpj(cnpj)) {
+            throw new RegraDeNegocioException(
+                    "Já existe um fornecedor com o CNPJ " + cnpj);
         }
         Fornecedor fornecedor = new Fornecedor(cnpj, razaoSocial);
         fornecedor.atualizarDadosCadastrais(razaoSocial, nomeFantasia);
@@ -69,10 +71,6 @@ public class FornecedorService {
         Fornecedor fornecedor = buscarPorId(id);
         fornecedor.atualizarDadosCadastrais(razaoSocial, nomeFantasia);
         fornecedor.atualizarContato(email, telefone);
-        if (!CnpjValidator.isValido(cnpj)) {
-            throw new RegraDeNegocioException(
-                    "CNPJ inválido: dígitos verificadores não conferem");
-        }
         return fornecedor;
     }
 

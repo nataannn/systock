@@ -1,8 +1,9 @@
 package com.systock.infrastructure.persistence;
 
-import com.systock.domain.categoria.Categoria;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
+
+import com.systock.domain.categoria.Categoria;
 
 import java.util.Optional;
 import java.util.UUID;
