@@ -28,7 +28,7 @@ public class SecurityConfig {
                 .loginProcessingUrl("/login")
                 .usernameParameter("email")
                 .passwordParameter("senha")
-                .defaultSuccessUrl("/categorias", true)
+                .defaultSuccessUrl("/", true)
                 .failureUrl("/login?erro")
                 .permitAll()
             )
@@ -39,8 +39,7 @@ public class SecurityConfig {
                 .deleteCookies("JSESSIONID")
                 .permitAll()
             )
-            .csrf(AbstractHttpConfigurer::disable);  // simplificação temporária — veja nota abaixo
-
+            
         return http.build();
     }
 }

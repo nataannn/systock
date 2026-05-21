@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      lang="pt-br">
+<head th:replace="~{fragments/layout :: head('Painel')}"></head>
+<body>
+    <div th:replace="~{fragments/layout :: navbar}"></div>
+
+    <h1>Painel</h1>
+    <p style="color:#666;">
+        Bem-vindo,
+        <span sec:authentication="name"></span>.
+        Visão geral do sistema.
+    </p>
+
+    <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin: 2rem 0;">
+
+        <div style="background: #f6f8fa; border: 1px solid #e1e4e8; border-radius: 8px; padding: 1.5rem;">
+            <p style="color:#666; margin: 0 0 0.5rem 0; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.5px;">
+                Categorias
+            </p>
+            <p style="font-size: 2.5rem; font-weight: bold; margin: 0; color: #0366d6;"
+               th:text="${metrics.totalCategorias()}">0</p>
+            <a th:href="@{/categorias}" style="font-size: 0.85rem;">Ver todas →</a>
+        </div>
+
+        <div style="background: #f6f8fa; border: 1px solid #e1e4e8; border-radius: 8px; padding: 1.5rem;">
+            <p style="color:#666; margin: 0 0 0.5rem 0; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.5px;">
+                Fornecedores ativos
+            </p>
+            <p style="font-size: 2.5rem; font-weight: bold; margin: 0; color: #28a745;"
+               th:text="${metrics.totalFornecedoresAtivos()}">0</p>
+            <a th:href="@{/fornecedores}" style="font-size: 0.85rem;">Ver todos →</a>
+        </div>
+
+        <div style="background: #f6f8fa; border: 1px solid #e1e4e8; border-radius: 8px; padding: 1.5rem;">
+            <p style="color:#666; margin: 0 0 0.5rem 0; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.5px;">
+                Produtos
+            </p>
+            <p style="font-size: 2.5rem; font-weight: bold; margin: 0; color: #6f42c1;"
+               th:text="${metrics.totalProdutos()}">0</p>
+            <a th:href="@{/produtos}" style="font-size: 0.85rem;">Ver todos →</a>
+        </div>
+
+        <div th:style="${metrics.produtosEmEstoqueCritico() > 0} 
+                       ? 'background: #fff5f5; border: 1px solid #d73a49; border-radius: 8px; padding: 1.5rem;'
+                       : 'background: #f6f8fa; border: 1px solid #e1e4e8; border-radius: 8px; padding: 1.5rem;'">
+            <p style="color:#666; margin: 0 0 0.5rem 0; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.5px;">
+                Estoque crítico
+            </p>
+            <p style="font-size: 2.5rem; font-weight: bold; margin: 0;"
+               th:style="${metrics.produtosEmEstoqueCritico() > 0} ? 'color: #d73a49;' : 'color: #999;'"
+               th:text="${metrics.produtosEmEstoqueCritico()}">0</p>
+            <a th:href="@{/produtos}" style="font-size: 0.85rem;">Ver detalhes →</a>
+        </div>
+
+    </div>
+
+    <div style="margin-top: 3rem; padding: 1rem; background: #f0f7ff; border-left: 4px solid #0366d6; border-radius: 4px;">
+        <p style="margin: 0;">
+            <strong>Systock v1.0</strong> &middot; Plataforma de gestão para microempresas de varejo de eletrônicos
+        </p>
+    </div>
+
+</body>
+</html>

@@ -36,6 +36,10 @@ management:
 
 server:
   port: 8080
+  error:
+    include-message: always
+    include-stacktrace: never
+
 
 logging:
   level:

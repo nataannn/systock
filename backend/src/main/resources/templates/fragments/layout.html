@@ -28,11 +28,12 @@
 <body th:fragment="navbar">
     <nav style="display:flex; justify-content:space-between; align-items:center;">
         <span>
+            <a th:href="@{/}">Painel</a>
             <a th:href="@{/categorias}">Categorias</a>
             <a th:href="@{/fornecedores}">Fornecedores</a>
             <a th:href="@{/produtos}">Produtos</a>
-            <a href="#">Clientes</a>
-            <a href="#">Vendas</a>
+            <a href="#" style="color:#999;">Clientes</a>
+            <a href="#" style="color:#999;">Vendas</a>
         </span>
         <span sec:authorize="isAuthenticated()">
             <span th:text="${#authentication.name}" style="margin-right: 1rem; color: #666;"></span>
