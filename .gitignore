@@ -22,3 +22,23 @@
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 replay_pid*
+
+# env
+.env
+.env.*
+!.env.example
+
+# Override local do Docker (senhas/chaves fora do compose versionado)
+docker-compose.override.yml
+
+# Spring Boot — perfil local com credenciais
+**/application-local.yml
+**/application-local.properties
+**/application-*.local.yml
+
+# IDE / OS
+.idea/
+.vscode/
+*.iml
+.DS_Store
+Thumbs.db

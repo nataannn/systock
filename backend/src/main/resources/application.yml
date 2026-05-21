@@ -42,7 +42,7 @@ server:
 
 systock:
   crypto:
-    secret-key: ${b43135798b3b053e65487699f5e30f80}
+    secret-key: ${SYSTOCK_CRYPTO_KEY:dev-only-change-me-32bytes!!}
 
 logging:
   level:
