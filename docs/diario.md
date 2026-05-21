@@ -25,3 +25,6 @@ Service, DTO, controller e três templates (lista, cadastro, edição). Dropdown
 
 ### 2026-05-15 - Vertical slice de Produto + quiz
 Service, DTO, controller, três templates de Produto. Bug do binding (Neither BindingResult... 'form') resolvido com @ModelAttribute("form") nos métodos POST. Mensagens de validação customizadas em português. Quiz: acertei UUID no DTO e estratégia anti-PRG. Travei em Single Responsibility (defesa dos 3 services injetados) e mecanismo de binding do Spring (sticky form). Conceitos a estudar antes da próxima sessão: SOLID aplicado, ciclo de vida de @ModelAttribute, binding bidirecional do Spring.
+
+### 2026-05-21 - Refatoração estrutural
+Repositórios movidos de application/* para infrastructure/persistence/. Arquivos duplicados removidos. Estrutura final em conformidade com Clean Architecture: domain isolado, application orquestra, infrastructure implementa persistência e segurança, web expõe HTTP. Eliminado conflito de bean definition que impedia o startup.
