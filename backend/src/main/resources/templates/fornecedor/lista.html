@@ -74,8 +74,8 @@
                     <span th:text="${f.telefone} ?: ''"></span>
                 </td>
                 <td>
-                    <span th:if="${f.ativo}" style="color: #28a745;">Ativo</span>
-                    <span th:if="${!f.ativo}" style="color: #999;">Inativo</span>
+                    <span th:if="${f.ativo}" class="badge ativo">Ativo</span>
+                    <span th:if="${!f.ativo}" class="badge inativo">Inativo</span>
                 </td>
                 <td>
                     <a th:href="@{|/fornecedores/${f.id}/editar|}">Editar</a>
