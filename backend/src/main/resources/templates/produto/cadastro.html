@@ -8,6 +8,8 @@
 
     <h1>Novo produto</h1>
 
+    <p class="erro" th:if="${erro}" th:text="${erro}"></p>
+
     <form th:action="@{/produtos}" th:object="${form}" method="post">
         <div class="grid-form">
             <div>

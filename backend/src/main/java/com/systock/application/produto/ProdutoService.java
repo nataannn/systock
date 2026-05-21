@@ -43,7 +43,7 @@ public class ProdutoService {
     public Produto buscarPorId(UUID id) {
         return produtoRepository.findById(id)
                 .orElseThrow(() -> new RegraDeNegocioException(
-                        "Produto não encontrado: " + id));
+                        "Produto não encontrado: " + id, "/produtos"));
     }
 
     @Transactional
@@ -61,20 +61,21 @@ public class ProdutoService {
 
         if (produtoRepository.existsByCodigoIgnoreCase(codigoNormalizado)) {
             throw new RegraDeNegocioException(
-                    "Já existe um produto com o código " + codigoNormalizado);
+                    "Já existe um produto com o código " + codigoNormalizado, "/produtos/novo");
         }
 
         Categoria categoria = categoriaRepository.findById(categoriaId)
                 .orElseThrow(() -> new RegraDeNegocioException(
-                        "Categoria selecionada não existe"));
+                        "Categoria selecionada não existe", "/produtos/novo"));
 
         Fornecedor fornecedor = fornecedorRepository.findById(fornecedorId)
                 .orElseThrow(() -> new RegraDeNegocioException(
-                        "Fornecedor selecionado não existe"));
+                        "Fornecedor selecionado não existe", "/produtos/novo"));
 
         if (!fornecedor.isAtivo()) {
             throw new RegraDeNegocioException(
-                    "Não é possível cadastrar produto vinculado a fornecedor inativo");
+                    "Não é possível cadastrar produto vinculado a fornecedor inativo",
+                    "/produtos/novo");
         }
 
         Produto produto = new Produto(
@@ -104,11 +105,11 @@ public class ProdutoService {
 
         Categoria categoria = categoriaRepository.findById(categoriaId)
                 .orElseThrow(() -> new RegraDeNegocioException(
-                        "Categoria selecionada não existe"));
+                        "Categoria selecionada não existe", "/produtos/" + id + "/editar"));
 
         Fornecedor fornecedor = fornecedorRepository.findById(fornecedorId)
                 .orElseThrow(() -> new RegraDeNegocioException(
-                        "Fornecedor selecionado não existe"));
+                        "Fornecedor selecionado não existe", "/produtos/" + id + "/editar"));
 
         produto.atualizarDadosCadastrais(
                 nome, descricao, precoCusto, precoVenda,

@@ -8,6 +8,8 @@
 
     <h1>Editar categoria</h1>
 
+    <p class="erro" th:if="${erro}" th:text="${erro}"></p>
+
     <form th:action="@{|/categorias/${categoria.id}|}" th:object="${form}" method="post">
         <label for="nome">Nome</label><br>
         <input type="text" id="nome" th:field="*{nome}" autofocus>

@@ -8,6 +8,8 @@
 
     <h1>Editar fornecedor</h1>
 
+    <p class="erro" th:if="${erro}" th:text="${erro}"></p>
+
     <form th:action="@{|/fornecedores/${fornecedor.id}|}" th:object="${form}" method="post">
         <div>
             <label>CNPJ</label><br>

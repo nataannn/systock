@@ -27,7 +27,7 @@ public class CategoriaService {
     public Categoria buscarPorId(UUID id) {
         return repository.findById(id)
                 .orElseThrow(() -> new RegraDeNegocioException(
-                        "Categoria não encontrada: " + id));
+                        "Categoria não encontrada: " + id, "/categorias"));
     }
 
     @Transactional
@@ -35,7 +35,7 @@ public class CategoriaService {
         String nomeNormalizado = nome.trim();
         if (repository.existsByNomeIgnoreCase(nomeNormalizado)) {
             throw new RegraDeNegocioException(
-                    "Já existe uma categoria com o nome '" + nomeNormalizado + "'");
+                    "Já existe uma categoria com o nome '" + nomeNormalizado + "'", "/categorias");
         }
         Categoria nova = new Categoria(nomeNormalizado);
         return repository.save(nova);
@@ -48,7 +48,8 @@ public class CategoriaService {
         if (!categoria.getNome().equalsIgnoreCase(nomeNormalizado)
                 && repository.existsByNomeIgnoreCase(nomeNormalizado)) {
             throw new RegraDeNegocioException(
-                    "Já existe outra categoria com o nome '" + nomeNormalizado + "'");
+                    "Já existe outra categoria com o nome '" + nomeNormalizado + "'",
+                    "/categorias/" + id + "/editar");
         }
         categoria.alterarNome(nomeNormalizado);
         return categoria;
