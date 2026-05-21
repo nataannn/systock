@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      lang="pt-br">
+<head th:replace="~{fragments/layout :: head('Nova venda')}"></head>
+<body>
+    <div th:replace="~{fragments/layout :: navbar}"></div>
+
+    <h1>Nova venda</h1>
+
+    <p class="erro" th:if="${erro}" th:text="${erro}"></p>
+
+    <form th:action="@{/vendas}" method="post" id="formVenda">
+        <div style="margin-bottom: 1rem;">
+            <label>Cliente (opcional)</label><br>
+            <select name="clienteId" style="min-width: 320px;">
+                <option value="">— Venda sem cliente —</option>
+                <option th:each="c : ${clientesDisponiveis}"
+                        th:value="${c.id}"
+                        th:text="${c.nome} + ' (' + ${c.cpfMascarado} + ')'">
+                </option>
+            </select>
+        </div>
+
+        <h2>Itens</h2>
+        <table id="tabelaItens" style="margin-bottom: 1rem;">
+            <thead>
+                <tr>
+                    <th style="min-width: 280px;">Produto</th>
+                    <th style="width: 120px;">Quantidade</th>
+                    <th style="width: 80px;"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="linha-item">
+                    <td>
+                        <select name="produtoIds" required style="width: 100%;">
+                            <option value="">Selecione...</option>
+                            <option th:each="p : ${produtosDisponiveis}"
+                                    th:value="${p.id}"
+                                    th:text="${p.codigo} + ' — ' + ${p.nome} + ' (estoque: ' + ${p.estoqueAtual} + ')'">
+                            </option>
+                        </select>
+                    </td>
+                    <td>
+                        <input type="number" name="quantidades" min="1" value="1" required>
+                    </td>
+                    <td>
+                        <button type="button" class="link btn-remover" onclick="removerLinha(this)" hidden>Remover</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <button type="button" class="link" onclick="adicionarLinha()">+ Adicionar item</button>
+        <br><br>
+        <button type="submit" class="primary">Registrar venda</button>
+        <a th:href="@{/vendas}">Cancelar</a>
+    </form>
+
+    <script>
+        function adicionarLinha() {
+            const tbody = document.querySelector('#tabelaItens tbody');
+            const primeira = tbody.querySelector('.linha-item');
+            const nova = primeira.cloneNode(true);
+            nova.querySelector('select').value = '';
+            nova.querySelector('input[type=number]').value = '1';
+            nova.querySelector('.btn-remover').hidden = false;
+            tbody.appendChild(nova);
+            atualizarBotoesRemover();
+        }
+
+        function removerLinha(btn) {
+            btn.closest('tr').remove();
+            atualizarBotoesRemover();
+        }
+
+        function atualizarBotoesRemover() {
+            const linhas = document.querySelectorAll('#tabelaItens .linha-item');
+            linhas.forEach((linha, idx) => {
+                const btn = linha.querySelector('.btn-remover');
+                btn.hidden = linhas.length === 1;
+            });
+        }
+    </script>
+</body>
+</html>

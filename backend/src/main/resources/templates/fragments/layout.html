@@ -18,8 +18,8 @@
             <a th:href="@{/categorias}">Categorias</a>
             <a th:href="@{/fornecedores}">Fornecedores</a>
             <a th:href="@{/produtos}">Produtos</a>
-            <a href="#" class="disabled">Clientes</a>
-            <a href="#" class="disabled">Vendas</a>
+            <a th:href="@{/clientes}">Clientes</a>
+            <a th:href="@{/vendas}">Vendas</a>
         </span>
         <span sec:authorize="isAuthenticated()">
             <span class="user-info" sec:authentication="name"></span>

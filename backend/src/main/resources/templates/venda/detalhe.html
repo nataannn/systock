@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      lang="pt-br">
+<head th:replace="~{fragments/layout :: head('Detalhe da venda')}"></head>
+<body>
+    <div th:replace="~{fragments/layout :: navbar}"></div>
+
+    <h1>Venda #<span th:text="${venda.numero}"></span></h1>
+
+    <p class="sucesso" th:if="${sucesso}" th:text="${sucesso}"></p>
+
+    <div style="margin-bottom: 1.5rem;">
+        <p><strong>Data:</strong>
+            <span th:text="${#temporals.format(venda.realizadoEm, 'dd/MM/yyyy HH:mm')}"></span></p>
+        <p><strong>Cliente:</strong>
+            <span th:text="${venda.cliente != null ? venda.cliente.nome : '—'}"></span></p>
+        <p><strong>Vendedor:</strong> <span th:text="${venda.usuario.nome}"></span></p>
+        <p><strong>Status:</strong> <span th:text="${venda.status}"></span></p>
+        <p><strong>Total:</strong>
+            <span th:text="'R$ ' + ${#numbers.formatDecimal(venda.valorTotal, 1, 'POINT', 2, 'COMMA')}"></span></p>
+    </div>
+
+    <table th:if="${!#lists.isEmpty(venda.itens)}">
+        <thead>
+            <tr>
+                <th>Produto</th>
+                <th>Código</th>
+                <th>Qtd</th>
+                <th>Preço unit.</th>
+                <th>Subtotal</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="item : ${venda.itens}">
+                <td th:text="${item.produto.nome}"></td>
+                <td th:text="${item.produto.codigo}"></td>
+                <td th:text="${item.quantidade}"></td>
+                <td th:text="'R$ ' + ${#numbers.formatDecimal(item.precoUnitario, 1, 'POINT', 2, 'COMMA')}"></td>
+                <td th:text="'R$ ' + ${#numbers.formatDecimal(item.subtotal, 1, 'POINT', 2, 'COMMA')}"></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <p style="margin-top: 1.5rem;">
+        <a th:href="@{/vendas}">← Voltar ao histórico</a>
+        &nbsp;|&nbsp;
+        <a th:href="@{/vendas/nova}">Nova venda</a>
+    </p>
+</body>
+</html>

@@ -50,8 +50,8 @@
                     <span th:if="${p.estoqueCritico}" style="color: #d73a49; font-weight:bold;"> ⚠</span>
                 </td>
                 <td>
-                    <span th:if="${f.ativo}" class="badge ativo">Ativo</span>
-                    <span th:if="${!f.ativo}" class="badge inativo">Inativo</span>
+                    <span th:if="${p.ativo}" class="badge ativo">Ativo</span>
+                    <span th:if="${!p.ativo}" class="badge inativo">Inativo</span>
                 </td>
                 <td>
                     <a th:href="@{|/produtos/${p.id}/editar|}">Editar</a>

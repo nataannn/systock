@@ -40,6 +40,9 @@ server:
     include-message: always
     include-stacktrace: never
 
+systock:
+  crypto:
+    secret-key: ${b43135798b3b053e65487699f5e30f80}
 
 logging:
   level:

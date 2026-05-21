@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      lang="pt-br">
+<head th:replace="~{fragments/layout :: head('Clientes')}"></head>
+<body>
+    <div th:replace="~{fragments/layout :: navbar}"></div>
+
+    <h1>Clientes</h1>
+
+    <p class="erro" th:if="${erro}" th:text="${erro}"></p>
+    <p class="sucesso" th:if="${sucesso}" th:text="${sucesso}"></p>
+
+    <form th:action="@{/clientes}" th:object="${form}" method="post" style="margin-bottom: 1.5rem;">
+        <div style="display: grid; grid-template-columns: repeat(2, 280px); gap: 0.5rem 1rem;">
+            <div>
+                <label>CPF</label><br>
+                <input type="text" th:field="*{cpf}" placeholder="00000000000" autofocus>
+                <p class="validacao" th:if="${#fields.hasErrors('cpf')}" th:errors="*{cpf}"></p>
+            </div>
+            <div>
+                <label>Nome</label><br>
+                <input type="text" th:field="*{nome}">
+                <p class="validacao" th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}"></p>
+            </div>
+            <div>
+                <label>E-mail</label><br>
+                <input type="text" th:field="*{email}">
+                <p class="validacao" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></p>
+            </div>
+            <div>
+                <label>Telefone</label><br>
+                <input type="text" th:field="*{telefone}">
+                <p class="validacao" th:if="${#fields.hasErrors('telefone')}" th:errors="*{telefone}"></p>
+            </div>
+        </div>
+        <br>
+        <button type="submit" class="primary">Cadastrar cliente</button>
+    </form>
+
+    <p>
+        <a th:if="${!incluirInativos}" th:href="@{/clientes(incluirInativos=true)}">
+            Mostrar também inativos
+        </a>
+        <a th:if="${incluirInativos}" th:href="@{/clientes}">
+            Mostrar somente ativos
+        </a>
+    </p>
+
+    <table th:if="${!#lists.isEmpty(clientes)}">
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>CPF</th>
+                <th>Contato</th>
+                <th>Status</th>
+                <th style="width: 220px;">Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="c : ${clientes}">
+                <td th:text="${c.nome}"></td>
+                <td th:text="${c.cpfMascarado}"></td>
+                <td>
+                    <span th:text="${c.email} ?: ''"></span>
+                    <span th:if="${c.email != null and c.telefone != null}"> · </span>
+                    <span th:text="${c.telefone} ?: ''"></span>
+                </td>
+                <td>
+                    <span th:if="${c.ativo}" class="badge ativo">Ativo</span>
+                    <span th:if="${!c.ativo}" class="badge inativo">Inativo</span>
+                </td>
+                <td>
+                    <a th:href="@{|/clientes/${c.id}/editar|}">Editar</a>
+                    &nbsp;|&nbsp;
+                    <form th:if="${c.ativo}" th:action="@{|/clientes/${c.id}/desativar|}" method="post"
+                          style="display:inline;"
+                          onsubmit="return confirm('Desativar este cliente?');">
+                        <button type="submit" class="link">Desativar</button>
+                    </form>
+                    <form th:if="${!c.ativo}" th:action="@{|/clientes/${c.id}/ativar|}" method="post"
+                          style="display:inline;">
+                        <button type="submit" class="link">Reativar</button>
+                    </form>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <p th:if="${#lists.isEmpty(clientes)}">Nenhum cliente cadastrado.</p>
+</body>
+</html>

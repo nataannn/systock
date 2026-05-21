@@ -36,6 +36,25 @@
             <a class="card-link" th:href="@{/produtos}">Ver detalhes →</a>
         </div>
 
+        <div class="card">
+            <p class="card-label">Clientes ativos</p>
+            <p class="card-value success" th:text="${metrics.totalClientesAtivos()}">0</p>
+            <a class="card-link" th:href="@{/clientes}">Ver todos →</a>
+        </div>
+
+        <div class="card">
+            <p class="card-label">Vendas registradas</p>
+            <p class="card-value brand" th:text="${metrics.totalVendas()}">0</p>
+            <a class="card-link" th:href="@{/vendas}">Ver histórico →</a>
+        </div>
+
+        <div class="card">
+            <p class="card-label">Faturamento do mês</p>
+            <p class="card-value brand"
+               th:text="'R$ ' + ${#numbers.formatDecimal(metrics.valorVendasMes(), 1, 'POINT', 2, 'COMMA')}">R$ 0,00</p>
+            <a class="card-link" th:href="@{/vendas/nova}">Nova venda →</a>
+        </div>
+
     </div>
 
     <div class="painel-info">

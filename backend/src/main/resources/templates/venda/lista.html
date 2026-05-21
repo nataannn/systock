@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      lang="pt-br">
+<head th:replace="~{fragments/layout :: head('Vendas')}"></head>
+<body>
+    <div th:replace="~{fragments/layout :: navbar}"></div>
+
+    <h1>Vendas</h1>
+
+    <p class="erro" th:if="${erro}" th:text="${erro}"></p>
+    <p class="sucesso" th:if="${sucesso}" th:text="${sucesso}"></p>
+
+    <p>
+        <a th:href="@{/vendas/nova}" class="primary"
+           style="display:inline-block; background:#0366d6; color:white; padding:0.5rem 1rem; border-radius:4px; text-decoration:none;">
+            + Nova venda
+        </a>
+    </p>
+
+    <table th:if="${!#lists.isEmpty(vendas)}">
+        <thead>
+            <tr>
+                <th>Nº</th>
+                <th>Data</th>
+                <th>Cliente</th>
+                <th>Vendedor</th>
+                <th>Total</th>
+                <th>Status</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="v : ${vendas}">
+                <td th:text="${v.numero}"></td>
+                <td th:text="${#temporals.format(v.realizadoEm, 'dd/MM/yyyy HH:mm')}"></td>
+                <td th:text="${v.cliente != null ? v.cliente.nome : '—'}"></td>
+                <td th:text="${v.usuario.nome}"></td>
+                <td th:text="'R$ ' + ${#numbers.formatDecimal(v.valorTotal, 1, 'POINT', 2, 'COMMA')}"></td>
+                <td>
+                    <span class="badge ativo" th:text="${v.status}"></span>
+                </td>
+                <td>
+                    <a th:href="@{|/vendas/${v.id}|}">Detalhes</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <p th:if="${#lists.isEmpty(vendas)}">Nenhuma venda registrada.</p>
+</body>
+</html>

@@ -27,6 +27,7 @@ services:
       DB_URL: jdbc:postgresql://db:5432/systock
       DB_USER: systock
       DB_PASSWORD: systock_dev
+      SYSTOCK_CRYPTO_KEY: b43135798b3b053e65487699f5e30f80
     ports:
       - "8080:8080"
 

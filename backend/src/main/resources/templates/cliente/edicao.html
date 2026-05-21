@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      lang="pt-br">
+<head th:replace="~{fragments/layout :: head('Editar cliente')}"></head>
+<body>
+    <div th:replace="~{fragments/layout :: navbar}"></div>
+
+    <h1>Editar cliente</h1>
+
+    <p class="erro" th:if="${erro}" th:text="${erro}"></p>
+
+    <form th:action="@{|/clientes/${cliente.id}|}" th:object="${form}" method="post">
+        <div>
+            <label>CPF</label><br>
+            <input type="text" th:field="*{cpf}" autofocus>
+            <p class="validacao" th:if="${#fields.hasErrors('cpf')}" th:errors="*{cpf}"></p>
+        </div>
+        <br>
+        <div>
+            <label>Nome</label><br>
+            <input type="text" th:field="*{nome}">
+            <p class="validacao" th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}"></p>
+        </div>
+        <br>
+        <div>
+            <label>E-mail</label><br>
+            <input type="text" th:field="*{email}">
+            <p class="validacao" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></p>
+        </div>
+        <br>
+        <div>
+            <label>Telefone</label><br>
+            <input type="text" th:field="*{telefone}">
+            <p class="validacao" th:if="${#fields.hasErrors('telefone')}" th:errors="*{telefone}"></p>
+        </div>
+        <br>
+        <button type="submit" class="primary">Salvar</button>
+        <a th:href="@{/clientes}">Cancelar</a>
+    </form>
+</body>
+</html>

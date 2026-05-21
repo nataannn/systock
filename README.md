@@ -14,12 +14,11 @@ como Trabalho de Conclusão de Curso, contempla módulos de:
 - **Produtos** com relacionamentos para Categoria e Fornecedor, controle
   de estoque (entrada/baixa), invariantes de domínio (estoque não-negativo,
   alerta de mínimo) e movimentações rastreáveis
+- **Clientes** com exclusão lógica, validação de CPF e dados sensíveis
+  criptografados em repouso (AES-256-GCM, LGPD)
+- **Vendas** com operação composta transacional, baixa atômica de estoque
+  e rastreio em `movimentacao_estoque`
 - **Painel** com indicadores em tempo real
-
-Os módulos de **Cliente** (com tratamento LGPD via criptografia AES-256
-em repouso) e **Venda** (operação composta transacional com baixa
-atômica de estoque) compõem os trabalhos futuros do projeto, já modelados
-em diagrama de classes.
 
 ## Stack tecnológico
 
@@ -59,6 +58,11 @@ A aplicação fica disponível em `http://localhost:8080`.
 Usuário inicial:
 - E-mail: `admin@systock.local`
 - Senha: `admin123`
+
+Chave de criptografia (LGPD — dados de clientes):
+- Variável `SYSTOCK_CRYPTO_KEY` com exatamente 32 caracteres
+- Já configurada no `docker-compose.yml` para desenvolvimento
+- Em produção, gere uma chave forte e defina apenas no ambiente (nunca no Git)
 
 ## Estrutura do repositório
 

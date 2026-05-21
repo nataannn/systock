@@ -1,7 +1,6 @@
 package com.systock.web;
 
 import com.systock.domain.shared.RegraDeNegocioException;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -14,6 +13,7 @@ public class GlobalExceptionHandler {
     public RedirectView tratarRegraDeNegocio(RegraDeNegocioException ex,
                                               RedirectAttributes attrs) {
         attrs.addFlashAttribute("erro", ex.getMessage());
-        return new RedirectView("/categorias");
+        String destino = ex.getRedirectPath() != null ? ex.getRedirectPath() : "/";
+        return new RedirectView(destino);
     }
 }
