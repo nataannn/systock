@@ -78,7 +78,7 @@ public class VendaService {
         }
 
         venda.finalizar();
-        Venda salva = vendaRepository.save(venda);
+        Venda salva = vendaRepository.saveAndFlush(venda);
 
         for (var item : salva.getItens()) {
             movimentacaoRepository.save(new MovimentacaoEstoque(

@@ -9,6 +9,8 @@
     <h1>Painel</h1>
     <p>Bem-vindo, <span sec:authentication="name"></span>. Visão geral do sistema.</p>
 
+    <p class="erro" th:if="${erro}" th:text="${erro}"></p>
+
     <div class="grid-cards">
 
         <div class="card">

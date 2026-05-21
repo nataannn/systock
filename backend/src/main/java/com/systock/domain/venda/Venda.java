@@ -19,6 +19,9 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
+import org.hibernate.annotations.Generated;
+import org.hibernate.generator.EventType;
+
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
@@ -35,6 +38,7 @@ public class Venda {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
+    @Generated(event = EventType.INSERT)
     @Column(name = "numero", nullable = false, unique = true, insertable = false, updatable = false)
     private Long numero;
 

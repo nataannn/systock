@@ -33,7 +33,7 @@ public class FornecedorService {
     public Fornecedor buscarPorId(UUID id) {
         return repository.findById(id)
                 .orElseThrow(() -> new RegraDeNegocioException(
-                        "Fornecedor não encontrado: " + id));
+                        "Fornecedor não encontrado: " + id, "/fornecedores"));
     }
 
     @Transactional
@@ -44,17 +44,18 @@ public class FornecedorService {
                             String telefone) {
         String cnpj = somenteDigitos(cnpjBruto);
         if (cnpj == null || cnpj.length() != 14) {
-            throw new RegraDeNegocioException("CNPJ deve conter exatamente 14 dígitos");
+            throw new RegraDeNegocioException(
+                    "CNPJ deve conter exatamente 14 dígitos", "/fornecedores");
         }
-        
+
         if (!CnpjValidator.isValido(cnpj)) {
             throw new RegraDeNegocioException(
-                    "CNPJ inválido: dígitos verificadores não conferem");
+                    "CNPJ inválido: dígitos verificadores não conferem", "/fornecedores");
         }
 
         if (repository.existsByCnpj(cnpj)) {
             throw new RegraDeNegocioException(
-                    "Já existe um fornecedor com o CNPJ " + cnpj);
+                    "Já existe um fornecedor com o CNPJ " + cnpj, "/fornecedores");
         }
         Fornecedor fornecedor = new Fornecedor(cnpj, razaoSocial);
         fornecedor.atualizarDadosCadastrais(razaoSocial, nomeFantasia);
