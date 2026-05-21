@@ -72,5 +72,5 @@ systock/
 
 ## Autoria
 
-Trabalho de Conclusão de Curso — FAM, [ano].
-Autor: Natan [seu sobrenome].
+Trabalho de Conclusão de Curso — FAM, 2026.
+Autores: Natan Nascimento, Miguel Gracio, Kauã de Moura Contieri, Hugo Araújo de Andrade Souza, André Silva de Carvalho, João Victor Oliveira Santos.
